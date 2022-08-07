@@ -1,1 +1,1 @@
-CREATE DATABASE cafedash_local;
+CREATE DATABASE nestjs_graphql_test_local;
