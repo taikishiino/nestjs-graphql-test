@@ -1,10 +1,11 @@
 variable "gcp_project_id" {}
-
 variable "artifact_registry_location" {
   type = string
   # https://cloud.google.com/storage/docs/locations
   description = "Artifact Registry のロケーションをどこにするか"
 }
+variable "backend_app_name" {}
+variable "frontend_app_name" {}
 
 # backendアプリケーション用の Artifact Registry リポジトリ
 resource "google_artifact_registry_repository" "nestjs-graphql-test-backend" {
