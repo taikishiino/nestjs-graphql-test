@@ -8,7 +8,7 @@ steps:
       - "--tag=$_ARTIFACT_REPOSITORY_IMAGE_NAME:latest"
       - --cache-from=$_ARTIFACT_REPOSITORY_IMAGE_NAME:latest
       - .
-    dir: "nestjs-graphql-test/backend"
+    dir: "backend"
   - id: push-backend
     name: "docker"
     args:
