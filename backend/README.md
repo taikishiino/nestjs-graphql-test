@@ -44,5 +44,4 @@ query Query {
 ```
 
 ## License
-
 Nest is [MIT licensed](LICENSE).
