@@ -1,5 +1,5 @@
 # Backend
-NestJS,GraphQL,Prisma
+NestJS/GraphQL/Prisma
 
 ## Setup
 ```bash
