@@ -14,7 +14,7 @@ steps:
     args:
       - push
       - --all-tags
-      - $_ARTIFACT_REPOSITORY_IMAGE_NAME
+      - $_ARTIFACT_REPOSITORY_IMAGE_NAME:$SHORT_SHA
     dir: "backend"
     waitFor: ["build-backend"]
   - id: "apply-migrations"
