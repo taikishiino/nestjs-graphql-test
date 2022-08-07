@@ -1,3 +1,6 @@
+# Backend
+NestJS,GraphQL,Prisma
+
 ## Setup
 ```bash
 $ yarn install
