@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  db:
+    image: mysql:5.7
+    container_name: cafedash_db
+    tty: true
+    environment:
+      TZ: Asia/Tokyo
+      LANG: C.UTF-8
+      MYSQL_ROOT_USER: root
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - 33006:3306
+    volumes:
+      - "db_data:/var/lib/mysql"
+      - "./docker/mysql/local:/docker-entrypoint-initdb.d"
+
+volumes:
+  db_data:

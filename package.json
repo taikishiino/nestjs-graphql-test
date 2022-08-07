@@ -1,0 +1,9 @@
+{
+  "name": "cafedash-test",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@nestjs/cli": "^9.0.0"
+  }
+}

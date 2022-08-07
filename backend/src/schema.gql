@@ -1,0 +1,24 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type PostModel {
+  id: String!
+  title: String!
+}
+
+type Query {
+  helloEnv: String!
+  posts: [PostModel!]
+}
+
+type Subscription {
+  getPosts: [UserModel!]!
+}
+
+type UserModel {
+  dateOfBirth: String!
+  gender: Float!
+  id: String!
+  name: String!
+}
