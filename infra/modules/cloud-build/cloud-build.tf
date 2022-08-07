@@ -15,8 +15,8 @@ resource "google_cloudbuild_trigger" "deploy-nestjs-graphql-test-backend" {
       branch = "^main$"
     }
   }
-  included_files = ["nestjs-graphql-test/backend/**"]
-  filename       = "nestjs-graphql-test/backend/cloudbuild.yml"
+  included_files = ["backend/**"]
+  filename       = "backend/cloudbuild.yml"
   substitutions = {
     _DEPLOY_REGION                  = var.region
     _CLOUDSQL_INSTANCE_FULL_NAME    = var.cloudsql_instance_full_name
