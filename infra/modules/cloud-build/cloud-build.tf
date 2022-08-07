@@ -20,6 +20,6 @@ resource "google_cloudbuild_trigger" "deploy-nestjs-graphql-test-backend" {
   substitutions = {
     _DEPLOY_REGION                  = var.region
     _CLOUDSQL_INSTANCE_FULL_NAME    = var.cloudsql_instance_full_name
-    _ARTIFACT_REPOSITORY_IMAGE_NAME = "${var.region}-docker.pkg.dev/${var.gcp_project_id}/${var.backend_app_name}"
+    _ARTIFACT_REPOSITORY_IMAGE_NAME = "${var.region}-docker.pkg.dev/${var.gcp_project_id}/${var.backend_app_name}/backend"
   }
 }
