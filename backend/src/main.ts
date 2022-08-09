@@ -9,13 +9,18 @@ async function bootstrap() {
 
   const winstonLogger = app.get(WINSTON_MODULE_NEST_PROVIDER);
   app.useLogger(winstonLogger);
-  const pbEnv = app.get(Env);
 
   const prismaService: PrismaService = app.get(PrismaService);
   prismaService.enableShutdownHooks(app);
   prismaService.enableLogger(winstonLogger);
 
-  await app.listen(pbEnv.Port, '0.0.0.0'); // 外部からリクエストを受け付けられるように 0.0.0.0 を追加
+  const pbEnv = app.get(Env);
+  let port = pbEnv.Port;
+  if (!port) {
+    port = 8080
+  }
+
+  await app.listen(port, '0.0.0.0'); // 外部からリクエストを受け付けられるように 0.0.0.0 を追加
   winstonLogger.log(`PORT: ${pbEnv.Port}`);
 }
 bootstrap();

@@ -22,7 +22,7 @@ WORKDIR /app
 COPY package.json ./
 COPY yarn.lock ./
 COPY prisma ./prisma
-# NODE_ENV=productionにしてyarn install(npm install)するとdevDependenciesがインストールされません
+# NODE_ENV=productionにしてyarn installするとdevDependenciesがインストールされません
 RUN yarn install
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/prisma ./prisma
