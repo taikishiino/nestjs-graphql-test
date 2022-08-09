@@ -36,7 +36,7 @@ steps:
       - --quiet
       - --platform=managed
       - --project=$PROJECT_ID
-      - --region=$_DEPLOY_REGION
+      - --region=$_REGION
       - --image=$_ARTIFACT_REPOSITORY_IMAGE_NAME:$SHORT_SHA
       - --service-account=$_SERVICE_ACCOUNT
       - --add-cloudsql-instances=$_CLOUDSQL_INSTANCE_FULL_NAME
@@ -57,7 +57,7 @@ steps:
     waitFor: ["apply-migrations"]
 timeout: 2000s
 substitutions:
-  _DEPLOY_REGION: by-terraform
+  _REGION: by-terraform
   _CLOUDSQL_INSTANCE_FULL_NAME: by-terraform
   _ARTIFACT_REPOSITORY_IMAGE_NAME: by-terraform
   _SERVICE_ACCOUNT: by-terraform

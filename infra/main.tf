@@ -20,6 +20,12 @@ module "artifact-registry" {
  frontend_app_name          = var.frontend_app_name
 }
 
+# Cloud Run Service Account
+module "cloud-run" {
+  source         = "./modules/cloud-run"
+  gcp_project_id = var.gcp_project_id
+}
+
 # Cloud SQL
 module "cloud-sql" {
  source        = "./modules/cloud-sql"
@@ -33,8 +39,10 @@ module "cloud-build" {
  source                      = "./modules/cloud-build"
  gcp_project_id              = var.gcp_project_id
  region                      = var.primary_region
+ cloud_run_service_account   = module.cloud-run.nestjs_graphql_test_app_runner_service_account
  cloudsql_instance_full_name = module.cloud-sql.nestjs_graphql_test_db_connection_name
  backend_app_name            = var.backend_app_name
+ frontend_app_name           = var.frontend_app_name
  github_owner                = "taikishiino"
  github_app_repo_name        = "nestjs-graphql-test"
 }
