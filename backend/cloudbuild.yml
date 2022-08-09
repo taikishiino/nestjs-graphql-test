@@ -32,7 +32,7 @@ steps:
       - beta
       - run
       - deploy
-      - training-backend
+      - nestjs-graphql-test-backend
       - --quiet
       - --platform=managed
       - --project=$PROJECT_ID
