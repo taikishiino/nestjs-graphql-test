@@ -42,6 +42,9 @@ query Query {
   }
 }
 ```
+```bash
+curl -X POST -H "Content-Type: application/json" "https://nestjs-graphql-test-backend-wb26trvrea-an.a.run.app/graphql" --data '{ "query": "{ users { id name }}" }'
+```
 
 ## License
 Nest is [MIT licensed](LICENSE).
