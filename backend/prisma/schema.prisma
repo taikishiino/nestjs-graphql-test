@@ -14,9 +14,26 @@ model User {
   id          String    @id @default(uuid())
   name        String    @db.VarChar(32)
   gender      Int
-  dateOfBirth String
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  dateOfBirth String    @map("date_of_birth")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
 
   @@map("users")
+}
+
+model Post {
+ id           String    @id @default(uuid())
+ title        String
+ type         String
+ thumbNailUrl String?   @map("thumb_nail_url")
+ contentPath  String    @unique @map("content_path")
+ md5Hash      String    @map("md5_hash")
+ published    Boolean?  @default(false)
+ publishDate  DateTime? @map("publish_date")
+ like         Int       @default(0)
+ createdAt    DateTime  @default(now()) @map("created_at")
+ updatedAt    DateTime  @updatedAt @map("updated_at")
+
+ @@index([contentPath])
+ @@map("posts")
 }
