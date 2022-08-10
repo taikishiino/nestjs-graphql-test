@@ -15,12 +15,7 @@ async function bootstrap() {
   prismaService.enableLogger(winstonLogger);
 
   const pbEnv = app.get(Env);
-  let port = pbEnv.Port;
-  if (!port) {
-    port = 8080
-  }
-
-  await app.listen(port, '0.0.0.0'); // 外部からリクエストを受け付けられるように 0.0.0.0 を追加
+  await app.listen(pbEnv.Port, '0.0.0.0');
   winstonLogger.log(`PORT: ${pbEnv.Port}`);
 }
 bootstrap();

@@ -13,9 +13,7 @@ import { PrismaModule } from '@/components/prisma/prisma.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      envFilePath: ['.env.development.local'],
-    }),
+    EnvModule,
     GraphQLModule.forRootAsync<ApolloDriverConfig>({
       driver: ApolloDriver,
       inject: [Env],
@@ -34,7 +32,6 @@ import { PrismaModule } from '@/components/prisma/prisma.module';
       }),
     }),
     PostsModule,
-    EnvModule,
     UsersModule
   ],
   controllers: [AppController],

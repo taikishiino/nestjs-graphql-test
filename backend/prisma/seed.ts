@@ -21,7 +21,7 @@ const userData: Prisma.UserCreateInput[] = [
 ]
 
 const main = async () => {
-  console.log(`Start seeding ...`)
+  console.log(`💫 Start seeding ...`)
 
   for (const u of userData) {
     const user = await prisma.user.create({
@@ -30,7 +30,7 @@ const main = async () => {
     console.log(`Created user with id: ${user.id}`)
   }
 
-  console.log(`Seeding finished`)
+  console.log(`💫 Seeding finished`)
 }
 
 main()
