@@ -10,7 +10,6 @@ RUN yarn prisma generate
 COPY . .
 RUN yarn build
 
-
 FROM node:16-stretch-slim AS runner
 ENV NODE_ENV=production
 
@@ -22,7 +21,7 @@ WORKDIR /app
 COPY package.json ./
 COPY yarn.lock ./
 COPY prisma ./prisma
-# NODE_ENV=productionにしてyarn installするとdevDependenciesがインストールされません
+# NODE_ENV=productionにしてyarn installするとdevDependenciesがインストールされない
 RUN yarn install
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/prisma ./prisma
