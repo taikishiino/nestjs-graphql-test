@@ -41,14 +41,6 @@ query Query {
     gender
   }
 }
-
-subscription {
-  postAdded {
-    id,
-    title,
-    createdAt
-  }
-}
 ```
 
 ```bash

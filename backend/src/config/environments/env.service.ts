@@ -31,40 +31,28 @@ export class Env {
   }
 
   get GqlModuleOptionsFactory(): ApolloDriverConfig {
-    if (this.isProduction()) {
-      return {
-        autoSchemaFile: true,
-        debug: false,
-        playground: false,
-        cors: {
-          origin: ["https://nestjs-graphql-test-frontend-wb26trvrea-an.a.run.app"],
-          credentials: true,
-        }
-      };
-    } else {
-      return {
-        autoSchemaFile: path.join(
-          process.cwd(),
-          'src/graphql/schema.gql',
-        ),
-        sortSchema: true,
-        debug: true,
-        playground: true,
-        cors: {
-          origin: ["http://localhost:3000"],
-          credentials: true,
+    return {
+      autoSchemaFile: this.isProduction() ? true : path.join(process.cwd(), 'src/graphql/schema.gql'),
+      sortSchema: true,
+      debug: this.isProduction() ? false : true,
+      playground: this.isProduction() ? false : true,
+      cors: {
+        origin: [
+          "https://nestjs-graphql-test-frontend-wb26trvrea-an.a.run.app",
+          "http://localhost:3000"
+        ],
+        credentials: true,
+      },
+      subscriptions: {
+        'graphql-ws': {
+          path: '/graphql'
         },
-        subscriptions: {
-          'graphql-ws': {
-            path: '/graphql'
-          },
-          // graphql-wsに移行されたら以下の記述とライブラリを削除する
-          // https://github.com/apollographql/subscriptions-transport-ws#readme
-          'subscriptions-transport-ws': {
-            path: '/graphql'
-          },
+        // graphql-wsに移行されたら以下の記述とライブラリを削除する
+        // https://github.com/apollographql/subscriptions-transport-ws#readme
+        'subscriptions-transport-ws': {
+          path: '/graphql'
         },
-      };
+      },
     }
   }
 
