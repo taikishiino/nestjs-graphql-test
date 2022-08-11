@@ -5,7 +5,7 @@ import { PrismaService } from '@/components/prisma/prisma.service';
 import { Env } from '@/config/environments/env.service';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { cors: true });
 
   const winstonLogger = app.get(WINSTON_MODULE_NEST_PROVIDER);
   app.useLogger(winstonLogger);

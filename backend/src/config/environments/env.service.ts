@@ -36,6 +36,10 @@ export class Env {
         autoSchemaFile: true,
         debug: false,
         playground: false,
+        cors: {
+          origin: ["https://nestjs-graphql-test-frontend-wb26trvrea-an.a.run.app"],
+          credentials: true,
+        }
       };
     } else {
       return {
@@ -46,6 +50,10 @@ export class Env {
         sortSchema: true,
         debug: true,
         playground: true,
+        cors: {
+          origin: ["http://localhost:3000"],
+          credentials: true,
+        }
       };
     }
   }
