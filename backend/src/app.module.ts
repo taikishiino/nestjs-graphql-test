@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from "@nestjs/graphql";
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { ConfigModule } from '@nestjs/config';
 import { WinstonModule } from 'nest-winston';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -10,6 +9,7 @@ import { EnvModule } from './config/environments/env.module';
 import { Env } from './config/environments/env.service';
 import { UsersModule } from '@/components/users/users.module';
 import { PrismaModule } from '@/components/prisma/prisma.module';
+import { PubSubModule } from './components/pub-sub/pub-sub.module';
 
 @Module({
   imports: [
@@ -32,13 +32,11 @@ import { PrismaModule } from '@/components/prisma/prisma.module';
       }),
     }),
     PostsModule,
-    UsersModule
+    UsersModule,
+    PubSubModule
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-
-
-
 
 export class AppModule {}

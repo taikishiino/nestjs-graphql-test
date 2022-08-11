@@ -53,7 +53,17 @@ export class Env {
         cors: {
           origin: ["http://localhost:3000"],
           credentials: true,
-        }
+        },
+        subscriptions: {
+          'graphql-ws': {
+            path: '/graphql'
+          },
+          // graphql-wsに移行されたら以下の記述とライブラリを削除する
+          // https://github.com/apollographql/subscriptions-transport-ws#readme
+          'subscriptions-transport-ws': {
+            path: '/graphql'
+          },
+        },
       };
     }
   }

@@ -1,18 +1,23 @@
 import type { GetServerSideProps, NextPage } from 'next'
+import { useState } from 'react'
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import usePosts from '@/hooks/usePosts'
+import useGetPosts from '@/hooks/useGetPosts'
+import useCreatePost from '@/hooks/useCreatePost'
+import useSubscribePost from '@/hooks/useSubscribePost'
 
 type Props = {
   title: string;
 };
 
 const Home: NextPage<Props> = (props) => {
-  const { posts, error, loading } = usePosts();
+  const { posts, error, loading, refetch } = useGetPosts();
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {JSON.stringify(error)}</p>;
-  console.warn("posts: ", posts)
+  const Status = () => {
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error: {JSON.stringify(error)}</p>;
+    return <></>
+  };
 
   return (
     <div className={styles.container}>
@@ -23,16 +28,74 @@ const Home: NextPage<Props> = (props) => {
       </Head>
 
       <main className={styles.main}>
+        <Status />
         <h1 className={styles.title}>{props.title}</h1>
-
+        <SubscribePost posts={posts} refetch={() => refetch()} />
         <ul>
           {posts.map((post: any, index: any) => {
             return <li key={index}>{post.title}</li>
           })}
         </ul>
+        <AddPost />
       </main>
     </div>
   )
+}
+
+const AddPost = () => {
+  const [title, setTitle] = useState("");
+  const { createPost, data, error, loading } = useCreatePost();
+
+  const Status = () => {
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error: {JSON.stringify(error)}</p>;
+    if (data && !data.upsertPost) return <p>同名の投稿が既に存在します</p>;
+    return <p>登録が完了しました</p>;
+  };
+
+  return (
+    <>
+      <form onSubmit={e => {
+        e.preventDefault();
+        createPost({
+          variables: {
+            input: {
+              title,
+              type: "type1",
+              contentPath: title,
+              md5Hash: "md5Hash1"
+            }
+          }
+        });
+      }}>
+        <input
+          type="text"
+          value={title}
+          onChange={(e) => setTitle(e.currentTarget.value)}
+        />
+      </form>
+      <Status />
+    </>
+  );
+}
+
+type SubscribePostProps = {
+  posts: any[]
+  refetch: () => void
+}
+const SubscribePost = (props: SubscribePostProps) => {
+  const { posts, refetch } = props;
+  const { data, error, loading } = useSubscribePost();
+
+  const Status = () => {
+    if (error) return <p>ネットワークが不安定です: {JSON.stringify(error)}</p>;
+    if (data && !posts.find(p => p.id === data.id)) {
+      return <button onClick={refetch}>追加で読み込む...</button>;
+    }
+    return <></>
+  };
+
+  return <Status />
 }
 
 export const getServerSideProps: GetServerSideProps<Props> = async () => {

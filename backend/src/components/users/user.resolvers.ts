@@ -1,6 +1,7 @@
 import { ArgsType, Args, Field, Resolver, Query } from '@nestjs/graphql';
-import { UserModel } from '@/components/users/user.model';
+import { User } from '@/components/users/user.model';
 import { PrismaService } from '@/components/prisma/prisma.service';
+import { Env } from '@/config/environments/env.service';
 
 @ArgsType()
 export class GetUsersArgs {
@@ -8,11 +9,14 @@ export class GetUsersArgs {
   gender?: number;
 }
 
-@Resolver((of) => UserModel)
+@Resolver((of) => User)
 export class UserResolver {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly env: Env
+  ) {}
 
-  @Query(() => [UserModel], { name: 'users', nullable: true })
+  @Query(() => [User], { name: 'users', nullable: true })
   async getUsers(@Args() args: GetUsersArgs) {
     console.warn("args: ", args)
     return this.prisma.user.findMany({
@@ -25,5 +29,10 @@ export class UserResolver {
         createdAt: 'desc',
       },
     });
+  }
+
+  @Query(() => String)
+  databaseUrl(): string {
+    return this.env.DatabaseUrl;
   }
 }

@@ -2,23 +2,41 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input CreatePostInput {
+  contentPath: String!
+  md5Hash: String!
+  title: String!
+  type: String!
+}
+
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
 scalar DateTime
 
-type PostModel {
+type Mutation {
+  createPost(input: CreatePostInput!): Post
+}
+
+type Post {
+  createdAt: DateTime!
   id: String!
   title: String!
+  type: String!
+  updatedAt: DateTime!
 }
 
 type Query {
-  helloEnv: String!
-  posts: [PostModel!]
-  users(gender: [Float!]): [UserModel!]
+  databaseUrl: String!
+  posts: [Post!]
+  users(gender: [Float!]): [User!]
 }
 
-type UserModel {
+type Subscription {
+  subscribePostCreated: Post
+}
+
+type User {
   createdAt: DateTime!
   dateOfBirth: String!
   gender: Float!

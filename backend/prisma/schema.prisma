@@ -25,8 +25,8 @@ model Post {
  id           String    @id @default(uuid())
  title        String
  type         String
- thumbNailUrl String?   @map("thumb_nail_url")
  contentPath  String    @unique @map("content_path")
+ thumbNailUrl String?   @map("thumb_nail_url")
  md5Hash      String    @map("md5_hash")
  published    Boolean?  @default(false)
  publishDate  DateTime? @map("publish_date")

@@ -8,6 +8,7 @@ steps:
           docker build
           --file=Dockerfile
           --build-arg=graphql_endpoint=$$GRAPHQL_ENDPOINT
+          --build-arg=graphql_endpoint_ws=$$GRAPHQL_ENDPOINT_WS
           --tag=$_ARTIFACT_REPOSITORY_IMAGE_NAME:$SHORT_SHA
           --tag=$_ARTIFACT_REPOSITORY_IMAGE_NAME:latest
           --cache-from=$_ARTIFACT_REPOSITORY_IMAGE_NAME:latest
@@ -15,7 +16,7 @@ steps:
 #          --build-arg=google_analytics_id=$_GOOGLE_ANALYTICS_ID
 #          --build-arg=ogp_site_home=$_OGP_SITE_HOME
 #          --build-arg=contents_bucket_name=$_CONTENTS_BUCKET_NAME
-    secretEnv: ["GRAPHQL_ENDPOINT"]
+    secretEnv: ["GRAPHQL_ENDPOINT", "GRAPHQL_ENDPOINT_WS"]
     dir: "frontend"
   - id: push-frontend
     name: "docker"
@@ -50,6 +51,7 @@ steps:
       - --no-cpu-throttling
       - --ingress=all
       - --update-secrets=GRAPHQL_ENDPOINT=NESTJS_GRAPHQL_TEST_GRAPHQL_ENDPOINT:latest
+      - --update-secrets=GRAPHQL_ENDPOINT_WS=NESTJS_GRAPHQL_TEST_GRAPHQL_ENDPOINT_WS:latest
     dir: "frontend"
     waitFor: ["push-frontend"]
 timeout: 2000s
@@ -61,6 +63,8 @@ availableSecrets:
   secretManager:
     - versionName: projects/$PROJECT_ID/secrets/NESTJS_GRAPHQL_TEST_GRAPHQL_ENDPOINT/versions/latest
       env: GRAPHQL_ENDPOINT
+    - versionName: projects/$PROJECT_ID/secrets/NESTJS_GRAPHQL_TEST_GRAPHQL_ENDPOINT_WS/versions/latest
+      env: GRAPHQL_ENDPOINT_WS
 
 # ビルド結果に生成したイメージ情報を表示する
 # https://cloud.google.com/build/docs/building/build-containers
