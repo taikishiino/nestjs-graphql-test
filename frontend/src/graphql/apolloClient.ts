@@ -14,8 +14,6 @@ const wsLink = typeof window !== 'undefined' ? new GraphQLWsLink(
     url: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT_WS ?? ""
   })
 ) : httpLink;
-console.warn("NEXT_PUBLIC_GRAPHQL_ENDPOINT: ", process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT)
-console.warn("NEXT_PUBLIC_GRAPHQL_ENDPOINT_WS: ", process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT_WS)
 
 const splitLink = split(
   ({ query }) => {

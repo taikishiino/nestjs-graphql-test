@@ -14,7 +14,7 @@ const useCreatePost = () => {
 
   return {
     createPost,
-    data,
+    post: data?.createPost,
     error,
     loading
   };

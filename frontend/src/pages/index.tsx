@@ -31,11 +31,11 @@ const Home: NextPage<Props> = (props) => {
       <main className={styles.main}>
         <Status />
         <h1 className={styles.title}>{props.title}</h1>
+        <AddPost />
         <SubscribePost posts={posts} refetch={() => refetch()} />
         <ul>
           {posts.map((post: any, i: number) => <li key={i}>{post.title}</li>)}
         </ul>
-        <AddPost />
       </main>
     </div>
   )
@@ -43,13 +43,13 @@ const Home: NextPage<Props> = (props) => {
 
 const AddPost = () => {
   const [title, setTitle] = useState("");
-  const { createPost, data, error, loading } = useCreatePost();
+  const { createPost, post, error, loading } = useCreatePost();
 
   const Status = () => {
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {JSON.stringify(error)}</p>;
-    if (data && !data.upsertPost) return <p>同名の投稿が既に存在します</p>;
-    return <p>登録が完了しました</p>;
+    if (post) return <p>注文しました！</p>;
+    return <></>;
   };
 
   return (
@@ -73,6 +73,7 @@ const AddPost = () => {
           value={title}
           onChange={(e) => setTitle(e.currentTarget.value)}
         />
+        <button type='submit'>注文</button>
       </form>
       <Status />
     </>
@@ -108,7 +109,7 @@ const SubscribePost = (props: SubscribePostProps) => {
 export const getServerSideProps: GetServerSideProps<Props> = async () => {
   return {
     props: {
-      title: "Hello, GraphQL!",
+      title: "nestjs-graphql-test",
     },
   };
 };

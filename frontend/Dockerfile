@@ -1,6 +1,7 @@
 FROM node:16 AS builder
 
 ARG graphql_endpoint
+ARG graphql_endpoint_ws
 
 # ビルドには devDependencies もインストールする必要があるため
 ENV NODE_ENV=development
