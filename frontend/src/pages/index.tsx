@@ -5,6 +5,7 @@ import styles from '../styles/Home.module.css'
 import useGetPosts from '@/hooks/useGetPosts'
 import useCreatePost from '@/hooks/useCreatePost'
 import useSubscribePost from '@/hooks/useSubscribePost'
+import useSound from 'use-sound';
 
 type Props = {
   title: string;
@@ -32,9 +33,7 @@ const Home: NextPage<Props> = (props) => {
         <h1 className={styles.title}>{props.title}</h1>
         <SubscribePost posts={posts} refetch={() => refetch()} />
         <ul>
-          {posts.map((post: any, index: any) => {
-            return <li key={index}>{post.title}</li>
-          })}
+          {posts.map((post: any, i: number) => <li key={i}>{post.title}</li>)}
         </ul>
         <AddPost />
       </main>
@@ -67,6 +66,7 @@ const AddPost = () => {
             }
           }
         });
+        setTitle("")
       }}>
         <input
           type="text"
@@ -85,11 +85,18 @@ type SubscribePostProps = {
 }
 const SubscribePost = (props: SubscribePostProps) => {
   const { posts, refetch } = props;
-  const { data, error, loading } = useSubscribePost();
+  const { data, error } = useSubscribePost();
+  const base64 =
+      "SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU2LjQwLjEwMQAAAAAAAAAAAAAA//NwwAAAAAAAAAAAAEluZm8AAAAPAAAADgAAAiQAYWFhYWFhYW1tbW1tbW15eXl5eXl5hoaGhoaGhpKSkpKSkpKenp6enp6eqqqqqqqqqra2tra2tra2wsLCwsLCws/Pz8/Pz8/b29vb29vb5+fn5+fn5/Pz8/Pz8/P/////////AAAAAExhdmM1Ni42MAAAAAAAAAAAAAAAACQAAAAAAAAAAAIkrpFKWwAAAAAAAAAAAAAAAAD/8xDEAALIAqgBQBAA//8/WH///UCAIAgq///zEsQBAzlK2AGAEAD/yvo+C///8WX5fwX/yP/zEMQCA2k+rAHAUACBbNb/q////0JgUmqH//MQxAEDATqsCAAOcMIP/ikVK3///icOwD7/8xDEAgNROqAQABpwNf/0AGSe///+M5Bq+P/zEMQBAwk6kAAAGnB+f/zIJd////h9KNX4//MQxAECyTqMAAAUcA7/8qEj2///g6eq+EX/8xDEAgNJOoQAA1UAn/8gAAmd///4OifVEP/zEMQBAuk6nDAADnBB8Bv/4a////FIeleB//MSxAIDETp8AANVCEZ//MQ3G///+wdq+Ai3//MQxAMC0TqAAAKPAP5QFf///xMGqv/cJv//8xDEBALhOowBQDgA54Pv///xMXr/768Ic//zEMQFA9kWhAGAOADqb8VjB+pv/4jdFUxB//MQxAIAAANIAcAAAE1FMy45OS41VVVVVVU=";
+  const dataURI = `data:audio/mp3;base64,${base64}`;
+  const [play] = useSound(dataURI);
+  // const sound = new Audio(dataURI);
+  // sound.play();
 
   const Status = () => {
     if (error) return <p>ネットワークが不安定です: {JSON.stringify(error)}</p>;
     if (data && !posts.find(p => p.id === data.id)) {
+      play();
       return <button onClick={refetch}>追加で読み込む...</button>;
     }
     return <></>
